@@ -1,0 +1,87 @@
+{
+  "name": "arnavideo",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "ArnaVideo — local AI image generation workspace",
+  "author": "ArnaVideo",
+  "main": "electron/main.cjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "electron:dev": "npm run build && node scripts/prepare-electron.mjs && electron .",
+    "dist:win": "npm run build && node scripts/prepare-electron.mjs && electron-builder --win dir",
+    "dist": "npm run dist:win"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.52.0",
+    "next": "^16.4.3",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "electron": "^45.0.0",
+    "electron-builder": "^26.18.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.3",
+    "postcss": "^8.5.31",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3"
+  },
+  "build": {
+    "appId": "app.arnavideo.desktop",
+    "productName": "ArnaVideo",
+    "copyright": "Copyright © ArnaVideo",
+    "directories": {
+      "output": "release",
+      "buildResources": "electron/assets"
+    },
+    "files": [
+      "electron/main.cjs",
+      "package.json"
+    ],
+    "afterPack": "./scripts/after-pack.cjs",
+    "extraResources": [
+      {
+        "from": ".next/standalone",
+        "to": "app",
+        "filter": [
+          "**/*",
+          "!.env",
+          "!media{,/**/*}",
+          "!pics{,/**/*}",
+          "!data{,/**/*}"
+        ]
+      }
+    ],
+    "extraFiles": [
+      {
+        "from": ".env.example",
+        "to": "."
+      }
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  }
+}
