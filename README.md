@@ -13,7 +13,7 @@ ArnaVideo is a local-first desktop and web workspace for generating images and v
 
 ## Requirements
 
-- Node.js 20 or newer
+- Node.js 22.12 or newer
 - npm
 - A Google AI Studio API key with access to the models you select
 
